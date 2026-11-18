@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Miguel Hernández López · Computer Engineering · Security</title>
+<meta name="description" content="Computer Engineering student at Universidad de Alcalá heading into cybersecurity: networks, Linux, C, databases. Portfolio of coursework projects tested on every push.">
+<meta property="og:title" content="Miguel Hernández López · Portfolio">
+<meta property="og:description" content="Computer Engineering @ UAH · networks, Linux, C, databases · heading into cybersecurity">
+<meta name="theme-color" content="#0A0F0D">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230A0F0D'/%3E%3Cpath d='M8 11l6 5-6 5' stroke='%2300E07A' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M16 22h8' stroke='%2300E07A' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#0A0F0D; --panel:#0F1714; --panel-2:#13201B; --line:#1E2B25; --line-2:#2A3B33;
+  --text:#D9E4DD; --muted:#8A9C93; --dim:#5E7068;
+  --accent:#00E07A; --accent-ink:#04140C; --amber:#F5B83D; --blue:#4FB3FF;
+  --mono: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --r:10px; --max:1120px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:
+  linear-gradient(rgba(0,224,122,.035) 1px,transparent 1px) 0 0/100% 32px,
+  linear-gradient(90deg,rgba(0,224,122,.035) 1px,transparent 1px) 0 0/32px 100%;
+  mask-image:linear-gradient(to bottom,#000 0,transparent 70vh)}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 16px}
+.mono{font-family:var(--mono)}
+.label{font:600 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.accent{color:var(--accent)}
+
+/* top bar */
+header.top{position:sticky;top:0;z-index:20;background:rgba(10,15,13,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:20px;height:56px}
+.brand{font:700 14px var(--mono);text-decoration:none;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.brand b{color:var(--accent)}
+nav.links{display:flex;gap:18px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+nav.links::-webkit-scrollbar{display:none}
+nav.links a{font:500 13px var(--mono);color:var(--muted);text-decoration:none;white-space:nowrap}
+nav.links a:hover{color:var(--text)}
+.lang{display:flex;border:1px solid var(--line-2);border-radius:999px;overflow:hidden;flex:none}
+.lang button{all:unset;cursor:pointer;font:600 12px var(--mono);padding:5px 10px;color:var(--muted)}
+.lang button[aria-pressed=true]{background:var(--accent);color:var(--accent-ink)}
+@media (max-width:720px){nav.links{display:none}.lang{margin-left:auto}}
+
+/* hero */
+.hero{padding:64px 0 40px}
+.hero .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
+@media (max-width:900px){.hero .grid{grid-template-columns:1fr}}
+.status{display:inline-flex;align-items:center;gap:8px;font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(0,224,122,.35);background:rgba(0,224,122,.07);padding:6px 12px;border-radius:999px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(0,224,122,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(0,224,122,0)}100%{box-shadow:0 0 0 0 rgba(0,224,122,0)}}
+h1{font:800 clamp(40px,7vw,76px)/1 var(--sans);letter-spacing:-.03em;margin:22px 0 14px}
+h1 span{display:block;color:var(--muted);font:600 clamp(16px,2vw,20px)/1.3 var(--mono);letter-spacing:.02em;margin-top:16px}
+.lead{font-size:clamp(17px,2vw,20px);color:var(--text);max-width:34ch;margin:0 0 22px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px;padding:0;list-style:none}
+.chips li{font:500 12.5px var(--mono);color:var(--text);border:1px solid var(--line-2);background:var(--panel);padding:5px 10px;border-radius:6px}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 14px var(--mono);text-decoration:none;padding:11px 16px;border-radius:8px;border:1px solid var(--line-2);background:var(--panel)}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn svg{width:16px;height:16px;flex:none}
+
+/* terminal */
+.term{background:#050907;border:1px solid var(--line-2);border-radius:var(--r);box-shadow:0 30px 60px -30px rgba(0,224,122,.25);overflow:hidden}
+.term .bar{display:flex;align-items:center;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--panel)}
+.term .bar i{width:10px;height:10px;border-radius:50%;background:var(--line-2)}
+.term .bar span{margin-left:8px;font:12px var(--mono);color:var(--dim)}
+.term pre{margin:0;padding:16px 16px 18px;font:13.5px/1.7 var(--mono);color:var(--text);white-space:pre-wrap;min-height:290px}
+.term .p{color:var(--accent)} .term .c{color:var(--dim)} .term .k{color:var(--blue)} .term .w{color:var(--amber)}
+.cursor{display:inline-block;width:8px;height:15px;background:var(--accent);vertical-align:-2px;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:var(--r);background:var(--panel);margin-top:48px}
+.stats div{padding:18px 20px;border-left:1px solid var(--line)}
+.stats div:first-child{border-left:0}
+.stats strong{display:block;font:800 30px/1.1 var(--sans);color:var(--text)}
+.stats span{font:12px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+@media (max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}.stats div:nth-child(3){border-left:0}.stats div:nth-child(n+3){border-top:1px solid var(--line)}}
+
+/* sections */
+section.block{padding:72px 0;border-top:1px solid var(--line)}
+.head{display:flex;align-items:baseline;gap:14px;margin-bottom:28px;flex-wrap:wrap}
+.head .num{font:700 13px var(--mono);color:var(--accent)}
+.head h2{font:800 clamp(26px,3.6vw,36px)/1.1 var(--sans);letter-spacing:-.02em;margin:0}
+.head p{margin:0 0 0 auto;color:var(--muted);font-size:15px;max-width:52ch}
+@media (max-width:720px){.head p{margin:0;flex-basis:100%}}
+
+/* about */
+.about{display:grid;grid-template-columns:1.2fr .8fr;gap:32px}
+@media (max-width:900px){.about{grid-template-columns:1fr}}
+.about p{margin:0 0 14px;color:#C6D3CB}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.facts{margin:0;display:grid;gap:12px}
+.facts div{display:grid;grid-template-columns:110px 1fr;gap:12px;font-size:14.5px}
+.facts dt{font:12px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding-top:2px}
+.facts dd{margin:0}
+
+/* toolbox */
+.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:900px){.tools{grid-template-columns:1fr}}
+.tools h3{font:700 13px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
+.tools ul{list-style:none;margin:0;padding:0}
+.tools li{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px dashed var(--line-2);font-size:15px}
+.tools li:first-child{border-top:0}
+.tools li a{font:12px var(--mono);color:var(--muted);text-decoration:none;text-align:right}
+.tools li a:hover{color:var(--accent)}
+
+/* projects */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.filters button{all:unset;cursor:pointer;font:600 12.5px var(--mono);padding:7px 12px;border-radius:999px;border:1px solid var(--line-2);color:var(--muted)}
+.filters button[aria-pressed=true]{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}
+.projects{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:1000px){.projects{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.projects{grid-template-columns:1fr}}
+.proj{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px;transition:border-color .15s,transform .15s}
+.proj:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.proj[hidden]{display:none}
+.proj .meta{display:flex;justify-content:space-between;gap:8px;align-items:center;font:12px var(--mono);color:var(--muted);margin-bottom:12px}
+.tag{font:600 11px var(--mono);padding:3px 8px;border-radius:999px;border:1px solid var(--line-2);color:var(--muted);white-space:nowrap}
+.tag.ci{color:var(--accent);border-color:rgba(0,224,122,.4)}
+.proj h3{font:800 20px/1.25 var(--sans);margin:0 0 4px}
+.proj .sub{font:12.5px var(--mono);color:var(--muted);margin:0 0 12px}
+.proj p{margin:0 0 14px;color:#C6D3CB;font-size:15px}
+.proj ul{margin:0 0 16px;padding-left:18px;color:#C6D3CB;font-size:14px}
+.proj ul li{margin:3px 0}
+.proj .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.stack{display:flex;flex-wrap:wrap;gap:6px}
+.stack span{font:11.5px var(--mono);color:var(--text);background:var(--panel-2);padding:3px 7px;border-radius:5px}
+.repo{font:600 13px var(--mono);color:var(--accent);text-decoration:none;white-space:nowrap}
+.repo:hover{text-decoration:underline}
+
+/* coursework */
+.years{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:900px){.years{grid-template-columns:1fr}}
+.year h3{display:flex;justify-content:space-between;font:700 13px var(--mono);letter-spacing:.12em;text-transform:uppercase;margin:0 0 10px;color:var(--text)}
+.year h3 small{color:var(--muted);font-weight:500;letter-spacing:.04em}
+.year ul{list-style:none;margin:0;padding:0}
+.year li{border-top:1px solid var(--line);padding:8px 0;font-size:14.5px;display:flex;justify-content:space-between;gap:10px}
+.year li a{text-decoration:none}
+.year li a:hover{color:var(--accent)}
+.year li em{font:normal 11.5px var(--mono);color:var(--dim)}
+.year li .wip{color:var(--amber)}
+
+/* path */
+.path{list-style:none;margin:0;padding:0;display:grid;gap:0;border-left:2px solid var(--line-2);margin-left:6px}
+.path li{position:relative;padding:0 0 22px 26px}
+.path li::before{content:"";position:absolute;left:-8px;top:5px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--line-2)}
+.path li.done::before{background:var(--accent);border-color:var(--accent)}
+.path li.now::before{border-color:var(--amber);background:rgba(245,184,61,.25)}
+.path b{display:block;font-size:16px}
+.path span{color:var(--muted);font-size:14.5px}
+.path em{font:normal 11.5px var(--mono);margin-left:8px;color:var(--muted)}
+.path .now em{color:var(--amber)}
+.path .done em{color:var(--accent)}
+
+/* contact */
+.contact{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+@media (max-width:720px){.contact{grid-template-columns:1fr}}
+.contact h2{font:800 clamp(28px,4.5vw,46px)/1.1 var(--sans);letter-spacing:-.02em;margin:0 0 10px}
+.contact p{color:var(--muted);margin:0;max-width:52ch}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--dim);font:12.5px var(--mono)}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* language switching */
+[data-lang-only]{display:none}
+html[lang=en] [data-lang-only=en], html[lang=es] [data-lang-only=es]{display:revert}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><b>&gt;_</b> miguel.hdz</a>
+    <nav class="links" aria-label="Sections">
+      <a href="#about" data-i18n="nav_about">about</a>
+      <a href="#toolbox" data-i18n="nav_toolbox">toolbox</a>
+      <a href="#projects" data-i18n="nav_projects">projects</a>
+      <a href="#coursework" data-i18n="nav_coursework">coursework</a>
+      <a href="#path" data-i18n="nav_path">security path</a>
+      <a href="#contact" data-i18n="nav_contact">contact</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-set-lang="es" aria-pressed="false">ES</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="grid">
+        <div>
+          <span class="status"><span class="dot" aria-hidden="true"></span><span data-i18n="status">Open to security internships · remote</span></span>
+          <h1>Miguel<br>Hernández López<span data-i18n="h1_sub">Computer Engineering · UAH</span></h1>
+          <p class="lead" data-i18n="lead">Third-year student heading into cybersecurity. I learn how systems work so I can see how they break and how to defend them.</p>
+          <ul class="chips" aria-label="Core skills">
+            <li>Networking · TCP/IP</li><li>Linux</li><li>C · POSIX</li><li>Python</li><li>Java</li><li>SQL · PostgreSQL</li><li>Wireshark</li><li>Git · CI</li>
+          </ul>
+          <div class="cta">
+            <a class="btn primary" href="#projects"><span data-i18n="cta_projects">See projects</span> →</a>
+            <a class="btn" href="https://github.com/MiguelHernandezz" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
+            <a class="btn" href="https://www.linkedin.com/in/miguel-hernandez-lopez/" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M0 1.15C0 .52.52 0 1.17 0h13.66C15.48 0 16 .52 16 1.15v13.7c0 .63-.52 1.15-1.17 1.15H1.17C.52 16 0 15.48 0 14.85V1.15zM4.94 13.4V6.17H2.53v7.23h2.41zM3.74 5.18c.84 0 1.36-.56 1.36-1.25-.02-.71-.52-1.25-1.35-1.25-.82 0-1.36.54-1.36 1.25 0 .69.52 1.25 1.33 1.25h.02zM8.66 13.4V9.36c0-.22.02-.43.08-.59.18-.43.57-.88 1.24-.88.87 0 1.22.67 1.22 1.64v3.87h2.41V9.26c0-2.22-1.19-3.26-2.77-3.26-1.28 0-1.86.71-2.18 1.2v.03h-.02l.02-.03V6.17H6.25c.03.68 0 7.23 0 7.23h2.41z"/></svg>LinkedIn</a>
+          </div>
+        </div>
+        <div class="term" aria-label="Terminal summary">
+          <div class="bar"><i></i><i></i><i></i><span>miguel@uah: ~</span></div>
+          <pre id="term"><span class="p">$</span> whoami
+miguel · B.S. Computer Engineering @ UAH (year 3)
+<span class="p">$</span> cat focus.txt
+<span class="k">networks</span>   TCP/IP, routing, VLANs, Wireshark
+<span class="k">systems</span>    Linux, POSIX processes &amp; threads, memory
+<span class="k">low-level</span>  C, assembly, pointers
+<span class="k">data</span>       PostgreSQL internals, transactions, WAL
+<span class="p">$</span> ls ~/next
+<span class="w">home-soc-lab/</span>  security-electives/  first-cert/
+<span class="p">$</span> <span class="cursor" aria-hidden="true"></span></pre>
+        </div>
+      </div>
+      <div class="stats">
+        <div><strong>19</strong><span data-i18n="st_repos">subject repos</span></div>
+        <div><strong>4</strong><span data-i18n="st_ci">tested by CI on every push</span></div>
+        <div><strong>22</strong><span data-i18n="st_subjects">subjects documented</span></div>
+        <div><strong>ES · EN</strong><span data-i18n="st_lang">bilingual</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="about">
+    <div class="wrap">
+      <div class="head"><span class="num">01</span><h2 data-i18n="about_h">About</h2></div>
+      <div class="about">
+        <div>
+          <p data-lang-only="en">I'm a third-year <b>Computer Engineering</b> student at the <b>Universidad de Alcalá (UAH)</b>, and I'm steering my degree towards <b>cybersecurity</b>. The parts I care about most are where security happens: <b>networks</b> (TCP/IP, routing, VLANs, traffic analysis), <b>operating systems</b> (Linux, POSIX processes and threads, memory) and <b>low-level programming</b> (C and assembly).</p>
+          <p data-lang-only="es">Estudio 3º de <b>Ingeniería Informática</b> en la <b>Universidad de Alcalá (UAH)</b> y estoy orientando la carrera hacia la <b>ciberseguridad</b>. Lo que más me interesa es donde ocurre la seguridad: <b>redes</b> (TCP/IP, routing, VLANs, análisis de tráfico), <b>sistemas operativos</b> (Linux, procesos e hilos POSIX, memoria) y <b>programación a bajo nivel</b> (C y ensamblador).</p>
+          <p data-lang-only="en">Everything here is real coursework, cleaned up so anyone can download and run it. Where a project could be tested automatically, it is: GitHub Actions builds it on Linux, runs it under sanitizers or against a real PostgreSQL, and fails if something breaks.</p>
+          <p data-lang-only="es">Todo lo que hay aquí son prácticas reales, preparadas para que cualquiera pueda descargarlas y ejecutarlas. Donde se podía probar automáticamente, se prueba: GitHub Actions las compila en Linux, las ejecuta con sanitizers o contra un PostgreSQL real, y falla si algo se rompe.</p>
+          <p data-lang-only="en">Next up: a home SOC lab (attacker VM, monitored targets, SIEM and IDS) to reproduce attacks and write the detections for them.</p>
+          <p data-lang-only="es">Lo siguiente: un laboratorio SOC propio (máquina atacante, objetivos monitorizados, SIEM e IDS) para reproducir ataques y escribir cómo detectarlos.</p>
+        </div>
+        <div class="card">
+          <dl class="facts">
+            <div><dt data-i18n="f_degree">Degree</dt><dd data-i18n="f_degree_v">B.S. Computer Engineering · Universidad de Alcalá · 2024–2028</dd></div>
+            <div><dt data-i18n="f_target">Target</dt><dd data-i18n="f_target_v">SOC analyst · pentester · security engineer (internship)</dd></div>
+            <div><dt data-i18n="f_mode">Mode</dt><dd data-i18n="f_mode_v">Remote or hybrid · Spain &amp; international</dd></div>
+            <div><dt data-i18n="f_lang">Languages</dt><dd data-i18n="f_lang_v">Spanish (native) · English (bilingual school)</dd></div>
+            <div><dt data-i18n="f_base">Based in</dt><dd>Madrid, Spain</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="toolbox">
+    <div class="wrap">
+      <div class="head"><span class="num">02</span><h2 data-i18n="tools_h">Toolbox, with receipts</h2><p data-i18n="tools_p">No self-rated percentages: every skill links to the repository where I used it.</p></div>
+      <div class="tools">
+        <div class="card">
+          <h3 data-i18n="t_sys">Systems &amp; networks</h3>
+          <ul>
+            <li>C · POSIX <a href="https://github.com/MiguelHernandezz/Sistemas-Operativos">Sistemas-Operativos ↗</a></li>
+            <li>Linux · Bash · Make <a href="https://github.com/MiguelHernandezz/Sistemas-Operativos">Sistemas-Operativos ↗</a></li>
+            <li>Wireshark · ICMP · DHCP · ARP <a href="https://github.com/MiguelHernandezz/Arquitectura-de-Redes-Avanzadas">Redes ↗</a></li>
+            <li>VLANs · 802.1Q · Packet Tracer <a href="https://github.com/MiguelHernandezz/Arquitectura-de-Redes-Avanzadas">Redes ↗</a></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 data-i18n="t_code">Languages</h3>
+          <ul>
+            <li>C++ · memory &amp; pointers <a href="https://github.com/MiguelHernandezz/Estructura-de-Datos">Estructura-de-Datos ↗</a></li>
+            <li>Java · threads · RMI <a href="https://github.com/MiguelHernandezz/Programacion-Avanzada">Programacion-Avanzada ↗</a></li>
+            <li>Python · pytest <a href="https://github.com/MiguelHernandezz/Algoritmia-y-Complejidad">Algoritmia ↗</a></li>
+            <li>R · statistics <a href="https://github.com/MiguelHernandezz/Estadistica">Estadistica ↗</a></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 data-i18n="t_data">Data &amp; engineering</h3>
+          <ul>
+            <li>PostgreSQL · WAL · PITR <a href="https://github.com/MiguelHernandezz/Bases-de-Datos-Avanzadas">BDA ↗</a></li>
+            <li>SQL · users &amp; privileges <a href="https://github.com/MiguelHernandezz/Bases-de-Datos-Avanzadas">BDA ↗</a></li>
+            <li>UML · IEEE 830 · JUnit <a href="https://github.com/MiguelHernandezz/Ingenieria-de-Software">Ing. Software ↗</a></li>
+            <li>GitHub Actions · ASan <a href="https://github.com/MiguelHernandezz/Estructura-de-Datos">CI ↗</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="projects">
+    <div class="wrap">
+      <div class="head"><span class="num">03</span><h2 data-i18n="proj_h">Projects</h2><p data-i18n="proj_p">University projects, most of them built in teams and credited as such. Each card links to a repository you can clone and run.</p></div>
+      <div class="filters" role="group" aria-label="Filter projects">
+        <button type="button" data-filter="all" aria-pressed="true" data-i18n="fl_all">All</button>
+        <button type="button" data-filter="systems" aria-pressed="false" data-i18n="fl_sys">Systems</button>
+        <button type="button" data-filter="networks" aria-pressed="false" data-i18n="fl_net">Networks</button>
+        <button type="button" data-filter="data" aria-pressed="false" data-i18n="fl_data">Data</button>
+        <button type="button" data-filter="algorithms" aria-pressed="false" data-i18n="fl_alg">Algorithms</button>
+        <button type="button" data-filter="software" aria-pressed="false" data-i18n="fl_sw">Software</button>
+      </div>
+      <div class="projects">
+
+        <article class="proj" data-cat="systems">
+          <div class="meta"><span>C · Linux · POSIX</span><span class="tag ci">CI · Linux</span></div>
+          <h3 data-i18n="p1_t">Unix minishell &amp; thread race</h3>
+          <p class="sub">Sistemas Operativos · <span data-i18n="team2">team of 2</span></p>
+          <p data-i18n="p1_d">A small shell with pipelines, redirection, background jobs and a SIGCHLD handler, plus a POSIX-threads simulation guarded by mutexes.</p>
+          <ul><li data-i18n="p1_b1">fork / execvp / waitpid, pipe + dup2</li><li data-i18n="p1_b2">No zombies: sigaction with WNOHANG reaping</li><li data-i18n="p1_b3">Smoke-tested on Ubuntu on every push</li></ul>
+          <div class="foot"><div class="stack"><span>C</span><span>pthreads</span><span>Make</span></div><a class="repo" href="https://github.com/MiguelHernandezz/Sistemas-Operativos">repo ↗</a></div>
+        </article>
+
+        <article class="proj" data-cat="data">
+          <div class="meta"><span>PostgreSQL 17 · Python</span><span class="tag ci">CI · PostgreSQL</span></div>
+          <h3 data-i18n="p2_t">PostgreSQL from the inside</h3>
+          <p class="sub">Bases de Datos Avanzadas · <span data-i18n="team2">team of 2</span></p>
+          <p data-i18n="p2_d">Storage and indexes on 30M rows, query plans, users and privileges, a three-session deadlock, point-in-time recovery and replication across four servers.</p>
+          <ul><li data-i18n="p2_b1">B-tree vs hash indexes, partitioning, VACUUM</li><li data-i18n="p2_b2">WAL inspection and PITR after simulated cluster loss</li><li data-i18n="p2_b3">CI spins up PostgreSQL and loads the generated data</li></ul>
+          <div class="foot"><div class="stack"><span>SQL</span><span>WAL</span><span>postgres_fdw</span></div><a class="repo" href="https://github.com/MiguelHernandezz/Bases-de-Datos-Avanzadas">repo ↗</a></div>
+        </article>
+
+        <article class="proj" data-cat="networks">
+          <div class="meta"><span>Wireshark · Packet Tracer</span><span class="tag" data-i18n="tag_reports">lab reports</span></div>
+          <h3 data-i18n="p3_t">Networks, packet by packet</h3>
+          <p class="sub">Redes de Computadores · <span data-i18n="team2">team of 2</span></p>
+          <p data-i18n="p3_d">Real captures of ICMP, DHCP, Ethernet and ARP in the UAH lab, then VLANs with 802.1Q trunks and a Wi-Fi network in Packet Tracer.</p>
+          <ul><li data-i18n="p3_b1">DHCP Discover → Offer → Request → ACK</li><li data-i18n="p3_b2">ARP on the wire: the mechanism behind ARP spoofing</li><li data-i18n="p3_b3">Traffic isolation between VLANs</li></ul>
+          <div class="foot"><div class="stack"><span>TCP/IP</span><span>VLAN</span><span>Wi-Fi</span></div><a class="repo" href="https://github.com/MiguelHernandezz/Arquitectura-de-Redes-Avanzadas">repo ↗</a></div>
+        </article>
+
+        <article class="proj" data-cat="systems software">
+          <div class="meta"><span>Java · RMI · Swing</span><span class="tag" data-i18n="tag_tested">run &amp; tested</span></div>
+          <h3 data-i18n="p4_t">Concurrent &amp; distributed simulations</h3>
+          <p class="sub">Programación Avanzada · <span data-i18n="team2">team of 2</span></p>
+          <p data-i18n="p4_d">Two multithreaded simulations that share state through monitors and locks, show it live in a GUI and expose it to a remote client over Java RMI.</p>
+          <ul><li data-i18n="p4_b1">Fair ReentrantLock with three Conditions per portal</li><li data-i18n="p4_b2">Per-planet monitors so threads never block across planets</li><li data-i18n="p4_b3">RMI client that pauses the server or empties depots</li></ul>
+          <div class="foot"><div class="stack"><span>Java 17</span><span>RMI</span><span>Maven</span></div><a class="repo" href="https://github.com/MiguelHernandezz/Programacion-Avanzada">repo ↗</a></div>
+        </article>
+
+        <article class="proj" data-cat="algorithms">
+          <div class="meta"><span>Python · pytest</span><span class="tag ci">CI · 13 tests</span></div>
+          <h3 data-i18n="p5_t">UAH-Route delivery planner</h3>
+          <p class="sub">Algoritmia y Complejidad · <span data-i18n="team3">team of 3</span></p>
+          <p data-i18n="p5_d">Picks the most valuable orders that fit in a van, then routes them across the real campus graph. Two NP-hard problems chained.</p>
+          <ul><li data-i18n="p5_b1">0/1 knapsack with weight + volume (3-D DP)</li><li data-i18n="p5_b2">TSP by branch and bound over Floyd-Warshall distances</li><li data-i18n="p5_b3">Held-Karp beyond 10 stops</li></ul>
+          <div class="foot"><div class="stack"><span>DP</span><span>B&amp;B</span><span>graphs</span></div><a class="repo" href="https://github.com/MiguelHernandezz/Algoritmia-y-Complejidad">repo ↗</a></div>
+        </article>
+
+        <article class="proj" data-cat="systems algorithms">
+          <div class="meta"><span>C++ · ASan</span><span class="tag ci">CI · sanitizers</span></div>
+          <h3 data-i18n="p6_t">Hand-written data structures</h3>
+          <p class="sub">Estructuras de Datos · <span data-i18n="team2">team of 2</span></p>
+          <p data-i18n="p6_d">Order-processing simulations built on linked queues, stacks, lists and a binary search tree, with no STL containers.</p>
+          <ul><li data-i18n="p6_b1">BST delete with the in-order minimum</li><li data-i18n="p6_b2">Every node freed by its destructor</li><li data-i18n="p6_b3">Run under AddressSanitizer + UBSan in CI</li></ul>
+          <div class="foot"><div class="stack"><span>C++17</span><span>pointers</span></div><a class="repo" href="https://github.com/MiguelHernandezz/Estructura-de-Datos">repo ↗</a></div>
+        </article>
+
+        <article class="proj" data-cat="software">
+          <div class="meta"><span>UML · JUnit</span><span class="tag" data-i18n="tag_reports">lab reports</span></div>
+          <h3 data-i18n="p7_t">Requirements, design &amp; testing</h3>
+          <p class="sub">Ingeniería del Software · <span data-i18n="team3">team of 3</span></p>
+          <p data-i18n="p7_d">An IEEE 830 specification and full UML design for a workshop chain, including its security requirements, then unit, white-box and black-box testing.</p>
+          <ul><li data-i18n="p7_b1">Use-case, class, sequence and deployment diagrams</li><li data-i18n="p7_b2">Cyclomatic complexity, basis paths, boundary values</li></ul>
+          <div class="foot"><div class="stack"><span>UML</span><span>JUnit</span></div><a class="repo" href="https://github.com/MiguelHernandezz/Ingenieria-de-Software">repo ↗</a></div>
+        </article>
+
+        <article class="proj" data-cat="data">
+          <div class="meta"><span>R</span><span class="tag" data-i18n="tag_tested">run &amp; tested</span></div>
+          <h3 data-i18n="p8_t">COVID-19 vs public transport</h3>
+          <p class="sub">Estadística · <span data-i18n="team2">team of 2</span></p>
+          <p data-i18n="p8_d">Descriptive and inferential analysis of Spanish COVID-19 cases against public transport use: normality tests, confidence intervals, proportion tests.</p>
+          <ul><li data-i18n="p8_b1">Scripts fixed to run standalone from a fresh clone</li><li data-i18n="p8_b2">p-values reproduce the original report</li></ul>
+          <div class="foot"><div class="stack"><span>R</span><span>ggplot2</span></div><a class="repo" href="https://github.com/MiguelHernandezz/Estadistica">repo ↗</a></div>
+        </article>
+
+        <article class="proj" data-cat="software">
+          <div class="meta"><span>Java · Swing</span><span class="tag" data-i18n="tag_tested">run &amp; tested</span></div>
+          <h3 data-i18n="p9_t">JavaEvents booking app</h3>
+          <p class="sub">Programación · <span data-i18n="team3">team of 3</span></p>
+          <p data-i18n="p9_d">A desktop app to publish, search, book and rate events, with client and administrator roles and object-serialization persistence.</p>
+          <ul><li data-i18n="p9_b1">16 Swing windows, OOP domain model</li><li data-i18n="p9_b2">Builds to a single runnable jar with Maven</li></ul>
+          <div class="foot"><div class="stack"><span>Java</span><span>Swing</span><span>Maven</span></div><a class="repo" href="https://github.com/MiguelHernandezz/Programacion">repo ↗</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="coursework">
+    <div class="wrap">
+      <div class="head"><span class="num">04</span><h2 data-i18n="cw_h">Coursework</h2><p data-i18n="cw_p">One repository per subject, each with its official syllabus from the UAH teaching guide.</p></div>
+      <div class="years">
+        <div class="card year">
+          <h3><span data-i18n="y1">Year 1</span><small>2024–25</small></h3>
+          <ul>
+            <li><a href="https://github.com/MiguelHernandezz/Fundamentos-de-Programacion" data-i18n="s_fp">Programming Fundamentals</a></li>
+            <li><a href="https://github.com/MiguelHernandezz/Fundamentos-de-Tecnologia-de-Computadores" data-i18n="s_ftc">Computer Technology Fundamentals</a></li>
+            <li><a href="https://github.com/MiguelHernandezz/Fundamentos-Matematicos" data-i18n="s_fm">Mathematical Foundations</a></li>
+            <li><a href="https://github.com/MiguelHernandezz/Estadistica" data-i18n="s_est">Statistics</a><em>project</em></li>
+            <li><a href="https://github.com/MiguelHernandezz/Fisica" data-i18n="s_fis">Physics</a></li>
+            <li><a href="https://github.com/MiguelHernandezz/Programacion" data-i18n="s_prog">Programming</a><em>project</em></li>
+            <li><a href="https://github.com/MiguelHernandezz/Estructura-y-Organizacion-de-Computadores" data-i18n="s_eoc">Computer Structure &amp; Organisation</a></li>
+            <li><a href="https://github.com/MiguelHernandezz/Estructuras-Discretas" data-i18n="s_ed">Discrete Structures</a></li>
+            <li><a href="https://github.com/MiguelHernandezz/Fundamentos-de-la-Empresa" data-i18n="s_fe">Business Fundamentals</a></li>
+          </ul>
+        </div>
+        <div class="card year">
+          <h3><span data-i18n="y2">Year 2</span><small>2025–26</small></h3>
+          <ul>
+            <li><a href="https://github.com/MiguelHernandezz/Sistemas-Operativos" data-i18n="s_so">Operating Systems</a><em>project</em></li>
+            <li><a href="https://github.com/MiguelHernandezz/Arquitectura-de-Redes" data-i18n="s_ar">Network Architecture</a></li>
+            <li><a href="https://github.com/MiguelHernandezz/Arquitectura-de-Redes-Avanzadas" data-i18n="s_rc">Computer Networks</a><em>project</em></li>
+            <li><a href="https://github.com/MiguelHernandezz/Bases-de-Datos" data-i18n="s_bd">Databases</a></li>
+            <li><a href="https://github.com/MiguelHernandezz/Bases-de-Datos-Avanzadas" data-i18n="s_bda">Advanced Databases</a><em>project</em></li>
+            <li><a href="https://github.com/MiguelHernandezz/Estructura-de-Datos" data-i18n="s_edat">Data Structures</a><em>project</em></li>
+            <li><a href="https://github.com/MiguelHernandezz/Programacion-Avanzada" data-i18n="s_pa">Advanced Programming</a><em>project</em></li>
+            <li><a href="https://github.com/MiguelHernandezz/Ingenieria-de-Software" data-i18n="s_is">Software Engineering</a><em>project</em></li>
+            <li><a href="https://github.com/MiguelHernandezz/Algoritmia-y-Complejidad" data-i18n="s_alg">Algorithms &amp; Complexity</a><em>project</em></li>
+            <li><a href="https://github.com/MiguelHernandezz/Matematicas-Avanzadas" data-i18n="s_ma">Advanced Mathematics</a></li>
+          </ul>
+        </div>
+        <div class="card year">
+          <h3><span data-i18n="y3">Year 3</span><small>2026–27</small></h3>
+          <ul>
+            <li><span data-i18n="s_soa">Advanced Operating Systems</span><em class="wip" data-i18n="wip">in progress</em></li>
+            <li><span data-i18n="s_ia">Artificial Intelligence</span><em class="wip" data-i18n="wip">in progress</em></li>
+            <li><span data-i18n="s_isa">Advanced Software Engineering</span><em class="wip" data-i18n="wip">in progress</em></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="path">
+    <div class="wrap">
+      <div class="head"><span class="num">05</span><h2 data-i18n="path_h">Security path</h2><p data-i18n="path_p">Where I am and what comes next. Nothing listed as done that isn't.</p></div>
+      <ol class="path">
+        <li class="done"><b data-i18n="pa1">Networking &amp; OS foundations</b><span data-i18n="pa1_d">TCP/IP, packet analysis, Linux processes, threads and memory</span><em data-i18n="done">done</em></li>
+        <li class="done"><b data-i18n="pa2">Coursework published and tested</b><span data-i18n="pa2_d">Reproducible repos, CI on Linux, sanitizers, real PostgreSQL</span><em data-i18n="done">done</em></li>
+        <li class="now"><b data-i18n="pa3">Home SOC lab</b><span data-i18n="pa3_d">Attacker VM, monitored targets, SIEM and IDS, detections mapped to MITRE ATT&amp;CK</span><em data-i18n="now">in progress</em></li>
+        <li><b data-i18n="pa4">Security electives at UAH</b><span data-i18n="pa4_d">Security · Distributed Systems Security</span><em data-i18n="next">next</em></li>
+        <li><b data-i18n="pa5">First certification</b><span data-i18n="pa5_d">Chosen once the lab is running</span><em data-i18n="next">next</em></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block" id="contact">
+    <div class="wrap contact">
+      <div>
+        <h2 data-i18n="ct_h">Looking for a security internship.</h2>
+        <p data-i18n="ct_p">SOC, pentesting or security engineering. Remote or hybrid, in Spain or abroad, in Spanish or English. The quickest way to reach me is LinkedIn.</p>
+      </div>
+      <div class="cta">
+        <a class="btn primary" href="https://www.linkedin.com/in/miguel-hernandez-lopez/" target="_blank" rel="noopener">LinkedIn →</a>
+        <a class="btn" href="https://github.com/MiguelHernandezz" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 Miguel Hernández López</span><span data-i18n="ft">One HTML file · no trackers · no dependencies</span></div>
+</footer>
+
+<script>
+(() => {
+  const ES = {
+    nav_about:"sobre mí", nav_toolbox:"herramientas", nav_projects:"proyectos", nav_coursework:"asignaturas", nav_path:"ruta", nav_contact:"contacto",
+    status:"Disponible para prácticas de seguridad · remoto", h1_sub:"Ingeniería Informática · UAH",
+    lead:"Estudiante de 3º orientado a la ciberseguridad. Aprendo cómo funcionan los sistemas para ver cómo se rompen y cómo defenderlos.",
+    cta_projects:"Ver proyectos", st_repos:"repos de asignaturas", st_ci:"probados por CI en cada push", st_subjects:"asignaturas documentadas", st_lang:"bilingüe",
+    about_h:"Sobre mí", f_degree:"Grado", f_degree_v:"Ingeniería Informática · Universidad de Alcalá · 2024–2028", f_target:"Objetivo",
+    f_target_v:"Analista SOC · pentester · ingeniero de seguridad (prácticas)", f_mode:"Modalidad", f_mode_v:"Remoto o híbrido · España e internacional",
+    f_lang:"Idiomas", f_lang_v:"Español (nativo) · inglés (colegio bilingüe)", f_base:"Ubicación",
+    tools_h:"Herramientas, con pruebas", tools_p:"Sin porcentajes inventados: cada habilidad enlaza al repo donde la usé.",
+    t_sys:"Sistemas y redes", t_code:"Lenguajes", t_data:"Datos e ingeniería",
+    proj_h:"Proyectos", proj_p:"Proyectos de la universidad, la mayoría en equipo y así indicado. Cada tarjeta enlaza a un repo que se puede clonar y ejecutar.",
+    fl_all:"Todos", fl_sys:"Sistemas", fl_net:"Redes", fl_data:"Datos", fl_alg:"Algoritmos", fl_sw:"Software",
+    team2:"equipo de 2", team3:"equipo de 3", tag_reports:"memorias", tag_tested:"ejecutado y probado",
+    p1_t:"Minishell Unix y carrera de hilos", p1_d:"Una shell con tuberías, redirecciones, segundo plano y manejador de SIGCHLD, y una simulación con hilos POSIX protegida con mutex.",
+    p1_b1:"fork / execvp / waitpid, pipe + dup2", p1_b2:"Sin zombis: sigaction con recogida WNOHANG", p1_b3:"Probado en Ubuntu en cada push",
+    p2_t:"PostgreSQL por dentro", p2_d:"Almacenamiento e índices con 30M de filas, planes de consulta, usuarios y privilegios, un deadlock entre tres sesiones, recuperación PITR y replicación en cuatro servidores.",
+    p2_b1:"Índices B-tree vs hash, particionado, VACUUM", p2_b2:"Inspección del WAL y PITR tras perder el clúster", p2_b3:"El CI levanta PostgreSQL y carga los datos generados",
+    p3_t:"Redes, paquete a paquete", p3_d:"Capturas reales de ICMP, DHCP, Ethernet y ARP en el laboratorio de la UAH, y VLANs con troncales 802.1Q y una red Wi-Fi en Packet Tracer.",
+    p3_b1:"DHCP Discover → Offer → Request → ACK", p3_b2:"ARP en el cable: la base del ARP spoofing", p3_b3:"Aislamiento de tráfico entre VLANs",
+    p4_t:"Simulaciones concurrentes y distribuidas", p4_d:"Dos simulaciones multihilo que comparten estado con monitores y cerrojos, lo muestran en una GUI y lo exponen a un cliente remoto con Java RMI.",
+    p4_b1:"ReentrantLock justo con tres Conditions por portal", p4_b2:"Monitores por planeta para no bloquear entre planetas", p4_b3:"Cliente RMI que pausa el servidor o vacía depósitos",
+    p5_t:"UAH-Route: planificador de repartos", p5_d:"Elige los pedidos más valiosos que caben en la furgoneta y calcula la ruta sobre el grafo real del campus. Dos problemas NP-difíciles encadenados.",
+    p5_b1:"Mochila 0/1 con peso y volumen (PD 3-D)", p5_b2:"TSP por ramificación y poda sobre distancias Floyd-Warshall", p5_b3:"Held-Karp a partir de 10 paradas",
+    p6_t:"Estructuras de datos a mano", p6_d:"Simulaciones de pedidos sobre colas, pilas, listas enlazadas y un árbol binario de búsqueda, sin contenedores de la STL.",
+    p6_b1:"Borrado en ABB con el mínimo en inorden", p6_b2:"Cada nodo liberado por su destructor", p6_b3:"Ejecutado con AddressSanitizer + UBSan en el CI",
+    p7_t:"Requisitos, diseño y pruebas", p7_d:"Especificación IEEE 830 y diseño UML completo para una cadena de talleres, con sus requisitos de seguridad, y después pruebas unitarias, de caja blanca y de caja negra.",
+    p7_b1:"Diagramas de casos de uso, clases, secuencia y despliegue", p7_b2:"Complejidad ciclomática, caminos básicos, valores límite",
+    p8_t:"COVID-19 frente al transporte público", p8_d:"Análisis descriptivo e inferencial de los casos de COVID-19 en España frente al uso del transporte público: normalidad, intervalos de confianza, contrastes de proporciones.",
+    p8_b1:"Scripts arreglados para funcionar desde un clon limpio", p8_b2:"Los p-valores reproducen el informe original",
+    p9_t:"JavaEvents: reservas de eventos", p9_d:"App de escritorio para publicar, buscar, reservar y valorar eventos, con roles de cliente y administrador y persistencia por serialización.",
+    p9_b1:"16 ventanas Swing y modelo de dominio OO", p9_b2:"Se compila en un único jar ejecutable con Maven",
+    cw_h:"Asignaturas", cw_p:"Un repositorio por asignatura, cada uno con su temario oficial de la guía docente de la UAH.",
+    y1:"1º", y2:"2º", y3:"3º", wip:"en curso",
+    s_fp:"Fundamentos de Programación", s_ftc:"Fundamentos de Tecnología de Computadores", s_fm:"Fundamentos Matemáticos", s_est:"Estadística", s_fis:"Física",
+    s_prog:"Programación", s_eoc:"Estructura y Organización de Computadores", s_ed:"Estructuras Discretas", s_fe:"Fundamentos de la Empresa",
+    s_so:"Sistemas Operativos", s_ar:"Arquitectura de Redes", s_rc:"Redes de Computadores", s_bd:"Bases de Datos", s_bda:"Bases de Datos Avanzadas",
+    s_edat:"Estructuras de Datos", s_pa:"Programación Avanzada", s_is:"Ingeniería del Software", s_alg:"Algoritmia y Complejidad", s_ma:"Matemáticas Avanzadas",
+    s_soa:"Sistemas Operativos Avanzados", s_ia:"Inteligencia Artificial", s_isa:"Ingeniería del Software Avanzada",
+    path_h:"Ruta en seguridad", path_p:"Dónde estoy y qué viene. Nada aparece como hecho si no lo está.",
+    pa1:"Bases de redes y sistemas operativos", pa1_d:"TCP/IP, análisis de paquetes, procesos, hilos y memoria en Linux",
+    pa2:"Asignaturas publicadas y probadas", pa2_d:"Repos reproducibles, CI en Linux, sanitizers, PostgreSQL real",
+    pa3:"Laboratorio SOC propio", pa3_d:"Máquina atacante, objetivos monitorizados, SIEM e IDS, detecciones mapeadas a MITRE ATT&CK",
+    pa4:"Optativas de seguridad en la UAH", pa4_d:"Seguridad · Seguridad en Sistemas Distribuidos", pa5:"Primera certificación", pa5_d:"La elegiré con el laboratorio en marcha",
+    done:"hecho", now:"en curso", next:"siguiente",
+    ct_h:"Busco prácticas en ciberseguridad.", ct_p:"SOC, pentesting o ingeniería de seguridad. En remoto o híbrido, en España o fuera, en español o inglés. La forma más rápida de contactarme es LinkedIn.",
+    ft:"Un solo HTML · sin rastreadores · sin dependencias"
+  };
+  const nodes = [...document.querySelectorAll("[data-i18n]")];
+  const EN = Object.fromEntries(nodes.map(n => [n.dataset.i18n, n.innerHTML]));
+  const setLang = (lang) => {
+    const dict = lang === "es" ? ES : EN;
+    nodes.forEach(n => { const v = dict[n.dataset.i18n]; if (v !== undefined) n.innerHTML = v; });
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-set-lang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.setLang === lang)));
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+  };
+  document.querySelectorAll("[data-set-lang]").forEach(b => b.addEventListener("click", () => setLang(b.dataset.setLang)));
+  let start = "en";
+  try { start = localStorage.getItem("lang") || ((navigator.language || "").toLowerCase().startsWith("es") ? "es" : "en"); } catch (e) {}
+  setLang(start);
+
+  const buttons = document.querySelectorAll("[data-filter]");
+  const cards = document.querySelectorAll(".proj");
+  buttons.forEach(b => b.addEventListener("click", () => {
+    buttons.forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    const f = b.dataset.filter;
+    cards.forEach(c => { c.hidden = !(f === "all" || c.dataset.cat.split(" ").includes(f)); });
+  }));
+})();
+</script>
+</body>
+</html>
